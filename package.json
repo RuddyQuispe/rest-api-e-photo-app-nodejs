@@ -4,7 +4,7 @@
   "description": "Development tools: nodejs, postgres, sequelize, pg, babel, passport, jwt",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "babel-node src/index.js"
   },
   "repository": {
     "type": "git",
