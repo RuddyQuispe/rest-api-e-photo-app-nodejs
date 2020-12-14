@@ -1,7 +1,7 @@
 export default {
     host : 'localhost',
-    user : 'owner_database',
-    passwd : 'XXXXXXXXX',
-    database : 'database_name',
+    user : 'project',
+    passwd : '123456',
+    database : 'project',
     dialect : 'postgres'
 }

@@ -44,7 +44,7 @@ export class App {
     }
 
     routes(){
-        this.app.use(UserRoutes);
+        this.app.use('/user_manage', UserRoutes);
     }
 
     /**
