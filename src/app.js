@@ -5,7 +5,7 @@ import {sequelize} from './config/database';
 /**
  * Import Routes
  */
-import UserRoutes from './user_management/routes/user_manage.route';
+import {UserRouter, RoleRouter} from './user_management/routes/index';
 
 /**
  * Main object, it's initialize to rest-api server
@@ -43,8 +43,12 @@ export class App {
         this.app.use(express.urlencoded({extended: true}));
     }
 
+    /**
+     * Imports Routes HTTP implemented in this Rest-API
+     */
     routes(){
-        this.app.use('/user_manage', UserRoutes);
+        this.app.use('/user_manage', UserRouter);
+        this.app.use('/role_manage', RoleRouter);
     }
 
     /**

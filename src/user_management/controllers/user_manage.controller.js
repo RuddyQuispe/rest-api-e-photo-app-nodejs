@@ -21,4 +21,9 @@ export class UserController {
         });
         res.json(userById);
     }
+
+    static async createUser(req, res) {
+        const {id, username, email, phone, status} = req.body;
+        res.send(req.body);
+    }
 }
