@@ -1,4 +1,4 @@
-import {sequelize} from "../../config/database";
+import {sequelize} from "../../../config/database";
 import {DataTypes, Model} from 'sequelize';
 
 export class Role extends Model {}
