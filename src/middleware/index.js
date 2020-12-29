@@ -1,5 +1,8 @@
+import { verifyToken, isAdmin } from './authjwt';
 
-export default function errorHandler (err, req, res, next) {
+function errorHandler(err, req, res, next) {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 }
+
+export { verifyToken, errorHandler ,isAdmin}

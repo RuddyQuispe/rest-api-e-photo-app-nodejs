@@ -1,4 +1,4 @@
 import RoleRouter from "./role_manage.routes";
-import UserRouter from "./user_manage.route";
+import UserPhotographerRouter from "./user_photographer_manage.routes";
 
-export {RoleRouter, UserRouter};
+export {RoleRouter, UserPhotographerRouter};

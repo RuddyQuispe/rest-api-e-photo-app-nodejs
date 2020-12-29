@@ -1,6 +1,6 @@
-import {User} from "../models/user.model";
+import {UserPhotographer} from "../models/user_photographer.model";
 
-export class UserController {
+export class UserPhotographerController {
     /**
      * Request GET: get list user
      * @param req
@@ -8,18 +8,18 @@ export class UserController {
      * @returns {Promise<void>}
      */
     static async getUsers(req, res) {
-        const listUser = await User.findAll();
+        const listUser = await UserPhotographer.findAll();
         res.json(listUser);
     }
 
     static async getUserById(req, res) {
-        const {id} = req.params;
-        const userById = await User.findOne({
+        const {code} = req.params;
+        const userByCode = await UserPhotographer.findOne({
             where: {
-                id
+                code
             }
         });
-        res.json(userById);
+        res.json(userByCode);
     }
 
     static async createUser(req, res) {
