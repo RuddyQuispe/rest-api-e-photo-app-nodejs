@@ -1,4 +1,4 @@
-import {Role} from "../models/role.model";
+// import {Role} from "../models/role.model";
 
 export class RoleController {
     /**
@@ -8,8 +8,8 @@ export class RoleController {
      * @returns {Promise<void>}
      */
     static async getRoles(req, res) {
-        const listRole = await Role.findAll();
-        res.json(listRole);
+        // const listRole = await Role.findAll();
+        res.json({ ok: 'ok'});
     }
 
     /**
@@ -19,12 +19,13 @@ export class RoleController {
      * @returns {Promise<void>}
      */
     static async getRoleById(req, res) {
-        const {id} = req.params;
-        const roleData = await Role.findOne({
-            where: {
-                id
-            }
-        });
-        res.json(roleData);
+        // const {id} = req.params;
+        // const roleData = await Role.findOne({
+        //     where: {
+        //         id
+        //     }
+        // });
+        // res.json(roleData);
+        res.json({ ok: 'ok'});
     }
 }

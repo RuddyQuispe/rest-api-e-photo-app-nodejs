@@ -1,7 +1,7 @@
 export default {
-    host : 'localhost',
-    user : 'project',
-    passwd : '123456',
-    database : 'project',
-    dialect : 'postgres'
+    host: 'localhost',
+    user: 'project',
+    password: '123456',
+    database: 'project',
+    port: '5432'
 }

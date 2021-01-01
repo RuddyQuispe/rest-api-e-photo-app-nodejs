@@ -1,12 +1,12 @@
 import express from 'express';
 import morgan from "morgan";
-import {sequelize} from './config/database';
+import  './config/database';
 import {errorHandler} from './middleware/index';
 
 /**
  * Import Routes
  */
-import {UserPhotographerRouter, RoleRouter} from './api/user_management/routes/index';
+import {UserPhotographerRouter, RoleRouter} from './api/user_management_guest_event_photographer/routes/index';
 import AuthRouter from './routes/auth.routes'
 
 /**
@@ -18,20 +18,6 @@ export class App {
      */
     constructor() {
         this.app=express();
-    }
-
-    /**
-     * function for testing connection to database
-     * sequelize object is src/config/database.js
-     * @returns {Promise<void>}
-     */
-    async testDatabase(){
-        try {
-            await sequelize.authenticate();
-            console.log('Connection has been established successfully.');
-        } catch (error) {
-            console.error('Unable to connect to the database:', error);
-        }
     }
 
     /**
@@ -51,7 +37,7 @@ export class App {
     routes(){
         this.app.use('/api/auth', AuthRouter);
         this.app.use('/api/user_photographer_manage', UserPhotographerRouter);
-        this.app.use('/api/role_manage', RoleRouter);
+        // this.app.use('/api/role_manage', RoleRouter);
         this.app.use(errorHandler);
         this.app.use((req, res, next)=>{
             res.status(404).json({error: 'error 404'});
@@ -66,11 +52,9 @@ export class App {
     async listen(port){
         this.app.set('port', port);
         // Execute Middlewares
-        await this.middlewares();
-        // Testing Connection SQL database
-        await this.testDatabase();
+        this.middlewares();
         // Listen routes of the Rest API
-        await this.routes();
+        this.routes();
         // Initialize port Rest API
         await this.app.listen(this.app.get('port'));
         console.log(`Server on port ${this.app.get('port')}`);
