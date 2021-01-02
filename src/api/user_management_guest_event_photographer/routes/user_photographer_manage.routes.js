@@ -6,8 +6,8 @@ const router = Router();
 
 router.get('/', UserPhotographerController.getUsers);
 
-router.get('/:id', UserPhotographerController.getUserById);
+router.get('/:id', [verifyToken, isPhotographerUser], UserPhotographerController.getUserById);
 
-router.post('/', [verifyToken, isPhotographerUser], UserPhotographerController.createUser);
+router.post('/', UserPhotographerController.createUser);
 
 export default router;
