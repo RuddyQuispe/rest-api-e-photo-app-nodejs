@@ -7,4 +7,10 @@ router.post('/signup/:type_user', AuthController.signUp);
 
 router.post('/signin', AuthController.signIn);
 
+router.post('/restore_account', AuthController.restoreAccount);
+
+router.post('/confirm_key', AuthController.postConfirmKey);
+
+router.put('/verify_password', AuthController.postVerifyPasswd);
+
 export default router;

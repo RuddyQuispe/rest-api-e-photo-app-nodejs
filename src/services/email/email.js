@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import nodeMailer from 'nodemailer';
 import config from './config.account';
 
 /**
@@ -8,25 +8,29 @@ import config from './config.account';
  * @param {string} subject : title email
  * @param {string} text : container email
  */
-export async function sendMail(from, to, subject, text){
-        let acccount = await nodemailer.createTestAccount();
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth:{
-                user : config.username,
-                password: config.password
-            },
-            tls: {rejectUnauthorized: false}
+export async function sendMail(to, subject, text) {
+    const transporter = await nodeMailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: config.username,
+            pass: config.password
+        },
+        tls: { rejectUnauthorized: false }
+    });
+    transporter.verify(function (error, success) {
+        if (error) {
+            console.log("Error connection to email server and account", error);
+        } else {
+            console.log("Server is ready to take our messages");
         }
-        );    
-        let infoMailer = await transporter.sendMail({
-            from,
-            to,
-            subject,
-            text
-        });
-        console.log("Status Mailer: "+infoMailer);
-        return infoMailer;
-    
+    });
+    const info = await transporter.sendMail({
+        from,                                   //"'RestTeam Server' <restteam2020@nodejs.net>",
+        to,
+        subject,
+        html: text
+    });
+    console.log("info the email: ", info);
+    return info;
 }
 

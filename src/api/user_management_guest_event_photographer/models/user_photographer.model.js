@@ -63,6 +63,22 @@ class UserPhotographerModel {
             return -1;
         }
     }
+
+    /**
+     * change password user account
+     * @param {integer} code : code user
+     * @param {string} password : new password
+     */
+    async changePasswordUser(code, password){
+        try {
+            const result = await connectionDB.query(`update photographer_user set "password"='${password}' where code=${code}`);
+            console.log("result update passwod: ", result);
+            return true;
+        } catch (error) {
+            console.log("Error in changePasswordUser(code, password)", error);
+            return false;
+        }
+    }
 }
 
 export const userPhotographer = new UserPhotographerModel();

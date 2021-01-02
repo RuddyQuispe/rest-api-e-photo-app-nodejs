@@ -1,4 +1,5 @@
 export default {
     username: 'XXXXXXXXXXXX',
-    password: 'XXXXXXXXXXXXX'
+    password: 'XXXXXXXXXXXXX',
+    email: 'xxxxxxx@email.com'
 }

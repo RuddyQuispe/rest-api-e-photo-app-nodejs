@@ -62,6 +62,22 @@ class UserOrganizerEvent {
             return -1;
         }
     }
+
+    /**
+     * change password of the account user
+     * @param {integer} id : id user
+     * @param {string} password : password cifrate
+     */
+    async changePasswordUser(id, password){
+        try {
+            const result = await connectionDB.query(`update event_organizer_user set "password"='${password}' where id=${id}`);
+            console.log("result update passwod: ", result);
+            return true;
+        } catch (error) {
+            console.log("Error in changePasswordUser(id, password)", error);
+            return false;
+        }
+    }
 }
 
 export const userOrganizerEvent = new UserOrganizerEvent();

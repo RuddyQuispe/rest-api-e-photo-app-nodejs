@@ -1,12 +1,13 @@
 import express from 'express';
 import morgan from "morgan";
-import  './config/database';
-import {errorHandler} from './middleware/index';
-
+import cors from 'cors';
+import './config/database';
+import { errorHandler } from './middleware/index';
 /**
  * Import Routes
  */
-import {UserPhotographerRouter, UserOrganizerEventRouter} from './api/user_management_guest_event_photographer/routes/index';
+import { UserPhotographerRouter, UserOrganizerEventRouter } from './api/user_management_guest_event_photographer/routes/';
+import { RouterPhotoStudio } from './api/photo_studio_event_management/routes/index';
 import AuthRouter from './routes/auth.routes'
 
 /**
@@ -17,7 +18,7 @@ export class App {
      * initialize expressjs framework
      */
     constructor() {
-        this.app=express();
+        this.app = express();
     }
 
     /**
@@ -25,22 +26,24 @@ export class App {
      * first running functions storage in middlewares
      * last running http request
      */
-    middlewares(){
+    middlewares() {
+        this.app.use(cors());
         this.app.use(morgan('dev'));
         this.app.use(express.json());
-        this.app.use(express.urlencoded({extended: true}));
+        this.app.use(express.urlencoded({ extended: true }));
     }
 
     /**
      * Imports Routes HTTP implemented in this Rest-API
      */
-    routes(){
+    routes() {
         this.app.use('/api/auth', AuthRouter);
         this.app.use('/api/user_photographer_manage', UserPhotographerRouter);
-        this.app.use('/api/role_manage', UserOrganizerEventRouter);
+        this.app.use('/api/user_organizer_manage', UserOrganizerEventRouter);
+        this.app.use('/api/photo_studio', RouterPhotoStudio);
         this.app.use(errorHandler);
-        this.app.use((req, res, next)=>{
-            res.status(404).json({error: 'error 404'});
+        this.app.use((req, res, next) => {
+            res.status(404).json({ error: 'error 404' });
         });
     }
 
@@ -49,7 +52,7 @@ export class App {
      * @param port
      * @returns {Promise<void>}
      */
-    async listen(port){
+    async listen(port) {
         this.app.set('port', port);
         // Execute Middlewares
         this.middlewares();
