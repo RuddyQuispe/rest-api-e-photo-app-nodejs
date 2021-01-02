@@ -1,7 +1,7 @@
 export default {
     host: 'localhost',
-    user: 'project',
+    user: 'ephotoapp',
     password: '123456',
-    database: 'project',
+    database: 'ephotoapp',
     port: '5432'
 }

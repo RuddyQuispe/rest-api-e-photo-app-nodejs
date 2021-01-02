@@ -136,3 +136,11 @@ create table sale_detail(
 	on update cascade
 	on delete cascade
 );
+
+create or replace function register_user_photographer(name_i varchar(100), email_i varchar(30), password_i text, id_studio_i integer)returns integer as
+$BODY$
+declare code_user integer;
+begin
+	insert into photographer_user("name", email, status, "password", id_studio) values (name_i, email_i, true, password_i , id_studio_i) returning code into code_user;
+	return code_user;
+end $BODY$ language plpgsql;

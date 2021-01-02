@@ -3,7 +3,7 @@ import connectionDB from '../../../config/database';
 class UserPhotographerModel {
 
     constructor(){
-        console.log("Initilized UserPhotographer");
+        console.log("Initilized UserPhotographer Model");
     }
     /**
      * Get list user photographer
@@ -38,7 +38,7 @@ class UserPhotographerModel {
      */
     async getLoginUserData(email){
         try {
-            const userPhotographerLogin = await connectionDB.query(`select code, email, "name", "password", status from photographer_user where email=${email}`);
+            const userPhotographerLogin = await connectionDB.query(`select code, email, "name", "password", status from photographer_user where email='${email}'`);
             return userPhotographerLogin.rows[0];
         } catch (error) {
             console.error("Error in getLoginUserData()", error);
@@ -55,12 +55,12 @@ class UserPhotographerModel {
      */
     async createUserPhotographer(name, email, password, idStudio){
         try {
-            const result = await connectionDB.query(`insert into photographer_user("name", email, status, "password", id_studio) values ('${name}', '${email}',true,'${password}', ${idStudio})`);
-            console.log("result query", result);
-            return true;
+            console.log(name, email, password, idStudio);
+            const result = await connectionDB.query(`select register_user_photographer('${name}', '${email}', '${password}', ${idStudio})`);
+            return result.rows[0].register_user_photographer;
         } catch (error) {
             console.error("Error in createUserPhotographer(name, email, password, idStudio)", error);
-            return false;
+            return -1;
         }
     }
 }

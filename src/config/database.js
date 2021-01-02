@@ -10,7 +10,7 @@ class Connection {
         try {
             this.pool = new Pool(dataConnectionJson);
             this.pool.connect();
-            console.log("Connected to database succesffully");
+            console.log("Connected to database succesffully", dataConnectionJson);
         } catch (error) {
             console.error("Error in connection to database", dataConnectionJson, error);
         }

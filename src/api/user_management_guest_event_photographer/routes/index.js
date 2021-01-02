@@ -1,4 +1,4 @@
-import RoleRouter from "./role_manage.routes";
+import UserOrganizerEventRouter from './user_organizer_event.routes'
 import UserPhotographerRouter from "./user_photographer_manage.routes";
 
-export {RoleRouter, UserPhotographerRouter};
+export {UserOrganizerEventRouter, UserPhotographerRouter};

@@ -6,7 +6,7 @@ import {errorHandler} from './middleware/index';
 /**
  * Import Routes
  */
-import {UserPhotographerRouter, RoleRouter} from './api/user_management_guest_event_photographer/routes/index';
+import {UserPhotographerRouter, UserOrganizerEventRouter} from './api/user_management_guest_event_photographer/routes/index';
 import AuthRouter from './routes/auth.routes'
 
 /**
@@ -37,7 +37,7 @@ export class App {
     routes(){
         this.app.use('/api/auth', AuthRouter);
         this.app.use('/api/user_photographer_manage', UserPhotographerRouter);
-        // this.app.use('/api/role_manage', RoleRouter);
+        this.app.use('/api/role_manage', UserOrganizerEventRouter);
         this.app.use(errorHandler);
         this.app.use((req, res, next)=>{
             res.status(404).json({error: 'error 404'});
