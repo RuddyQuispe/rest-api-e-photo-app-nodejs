@@ -65,16 +65,30 @@ class UserOrganizerEvent {
 
     /**
      * change password of the account user
-     * @param {integer} id : id user
+     * @param {integer} email : email user
      * @param {string} password : password cifrate
      */
-    async changePasswordUser(id, password){
+    async changePasswordUser(email, password) {
         try {
-            const result = await connectionDB.query(`update event_organizer_user set "password"='${password}' where id=${id}`);
+            const result = await connectionDB.query(`update event_organizer_user set "password"='${password}' where email='${email}'`);
             console.log("result update passwod: ", result);
             return true;
         } catch (error) {
-            console.log("Error in changePasswordUser(id, password)", error);
+            console.log("Error in changePasswordUser(email, password)", error);
+            return false;
+        }
+    }
+
+    /**
+     * update status account user organizer event
+     * @param {integer} codeUser : id user
+     */
+    async enableDisableOrganizerEvent(codeUser) {
+        try {
+            await connectionDB.query(`update event_organizer_user set status=not status where id=${codeUser}`);
+            return true;
+        } catch (error) {
+            console.log("Error in enableDisableOrganizerEvent(codeUser)", error);
             return false;
         }
     }

@@ -11,7 +11,7 @@ class PhotoStudio {
      */
     async getListPhotoStudio(){
         try {
-            const listStudio = await connectionDB.query(`select id, "name", address from photo_studio`);
+            const listStudio = await connectionDB.query(`select id, "name", address, array(select (ss.id_social ,ss.description)::text from studio_social ss where ss.id_studio=id) from photo_studio`);
             return listStudio.rows;
         } catch (error) {
             console.log("Erro in getListPhotoStudio()", error);

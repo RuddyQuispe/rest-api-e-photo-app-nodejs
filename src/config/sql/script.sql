@@ -144,3 +144,5 @@ begin
 	insert into photographer_user("name", email, status, "password", id_studio) values (name_i, email_i, true, password_i , id_studio_i) returning code into code_user;
 	return code_user;
 end $BODY$ language plpgsql;
+
+insert into social_network(description) values ('Facebook'),('Twiter'),('Instagram'),('Tik tok');

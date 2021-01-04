@@ -5,6 +5,8 @@ const router = Router();
 
 router.post('/signup/:type_user', AuthController.signUp);
 
+router.get('/signup/photographer', AuthController.getCreateAccount);
+
 router.post('/signin', AuthController.signIn);
 
 router.post('/restore_account', AuthController.restoreAccount);

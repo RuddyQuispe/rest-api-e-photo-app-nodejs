@@ -12,7 +12,7 @@ export async function sendMail(to, subject, text) {
     const transporter = await nodeMailer.createTransport({
         service: 'gmail',
         auth: {
-            user: config.username,
+            user: config.email,
             pass: config.password
         },
         tls: { rejectUnauthorized: false }
@@ -25,7 +25,7 @@ export async function sendMail(to, subject, text) {
         }
     });
     const info = await transporter.sendMail({
-        from,                                   //"'RestTeam Server' <restteam2020@nodejs.net>",
+        from : config.username,                                   //"'RestTeam Server' <restteam2020@nodejs.net>",
         to,
         subject,
         html: text

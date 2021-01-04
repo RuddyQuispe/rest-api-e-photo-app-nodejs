@@ -1,10 +1,11 @@
 import { Router } from 'express';
+import { verifyToken } from '../../../middleware';
 import { PhotoStudioController } from '../controllers/photo_studio.controller';
 
 const router = Router();
 
-router.get('/', PhotoStudioController.getListPhotoStudio);
+router.get('/', [verifyToken], PhotoStudioController.getListPhotoStudio);
 
-router.post('/', PhotoStudioController.createPhotoStudio);
+router.post('/', [verifyToken], PhotoStudioController.createPhotoStudio);
 
 export default router;
