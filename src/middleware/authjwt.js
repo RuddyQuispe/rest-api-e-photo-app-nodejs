@@ -9,10 +9,13 @@ export const verifyToken = async (req, res, next) => {
         const token = req.headers["x-access-token"];
         console.log(token);
         if (!token) {
+            console.log("no token");
             return res.status(403).json({ message: `Not token provided` });
         } else {
             const decoded = jwt.verify(token, config.SECRET);
+            console.log("token ", decoded, decoded.id);
             let user = await userPhotographer.getDataUserPhotographer(decoded.id);
+            console.log(user);
             if (!user) {
                 // if not user organizer event
                 user = await userOrganizerEvent.getDataUserOrganizerEvent(decoded.id);

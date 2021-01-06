@@ -119,10 +119,10 @@ export class AuthController {
                     console.log("crash 200");
                     res.status(200).json({ token: null, message: `invalid password` });
                 } else {
-                    const token = jwt.sign({ id: userAccount.code }, config.SECRET, {
+                    const token = jwt.sign({ id: userAccount.id }, config.SECRET, {
                         expiresIn: 86400
                     });
-                    console.log("crash good");
+                    console.log("crash good", token);
                     res.json({ token, message: `welcome`, type: 'Organizer User' });
                 }
             }

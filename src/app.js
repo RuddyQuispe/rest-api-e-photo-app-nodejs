@@ -7,7 +7,7 @@ import { errorHandler } from './middleware/index';
  * Import Routes
  */
 import { UserPhotographerRouter, UserOrganizerEventRouter } from './api/user_management_guest_event_photographer/routes/';
-import { RouterPhotoStudio } from './api/photo_studio_event_management/routes/index';
+import { RouterEvent, RouterPhotoStudio } from './api/photo_studio_event_management/routes/index';
 import AuthRouter from './routes/auth.routes'
 
 /**
@@ -41,6 +41,7 @@ export class App {
         this.app.use('/api/user_photographer_manage', UserPhotographerRouter);
         this.app.use('/api/user_organizer_manage', UserOrganizerEventRouter);
         this.app.use('/api/photo_studio', RouterPhotoStudio);
+        this.app.use('/api/event_manage', RouterEvent);
         this.app.use(errorHandler);
         this.app.use((req, res, next) => {
             res.status(404).json({ error: 'error 404' });

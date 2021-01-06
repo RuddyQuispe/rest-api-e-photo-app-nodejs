@@ -1,3 +1,4 @@
+import { response } from 'express';
 import connectionDB from '../../../config/database';
 
 class PhotoStudio {
@@ -31,6 +32,19 @@ class PhotoStudio {
         } catch (error) {
             console.log("Error in registerPhotoStudio(name, address)", error);
             return -1;
+        }
+    }
+
+    /**
+     * Return list options photo studio available
+     */
+    async getStudioOptions(){
+        try {
+            const response = await connectionDB.query(`select id, "name" from photo_studio ps`);
+            return response.rows;
+        } catch (error) {
+            console.log("Error in getStudioOptions()", error);
+            return null;
         }
     }
 }

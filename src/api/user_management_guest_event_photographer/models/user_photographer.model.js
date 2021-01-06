@@ -10,7 +10,7 @@ class UserPhotographerModel {
      */
     async getListUserPhotographer() {
         try {
-            const listUserPhotographers = await connectionDB.query(`select pu.code, pu."name", pu.email, pu.status, ps."name" name_studio from photographer_user pu, photo_studio ps where pu.id_studio=ps.id`);
+            const listUserPhotographers = await connectionDB.query(`select pu.code, pu."name", pu.email, pu.status, ps."name" name_studio, array(select (id_social, description)::text from photo_social where code_photographer=pu.code) from photographer_user pu, photo_studio ps where pu.id_studio=ps.id`);
             return listUserPhotographers.rows;
         } catch (error) {
             console.error("Error in createUserPhotographer()", error);
