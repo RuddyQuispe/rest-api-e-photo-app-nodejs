@@ -15,4 +15,8 @@ router.post('/confirm_key', AuthController.postConfirmKey);
 
 router.put('/verify_password', AuthController.postVerifyPasswd);
 
+router.post('/signin_guest', AuthController.signInGuest);
+
+router.post('/sign_up_guest', AuthController.signUpGuest);
+
 export default router;

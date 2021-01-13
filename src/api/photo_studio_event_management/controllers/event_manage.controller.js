@@ -42,7 +42,7 @@ export class EventController {
         if (await eventModel.enableEvent(code)) {
             const dataEvent = await eventModel.getEventData(code);
             console.log(dataEvent);
-            await QRCode.toFile('./qr.png', JSON.stringify(dataEvent), { color: { dark: '#000000', light: '#0000' } });
+            // await QRCode.toFile('./qr.png', JSON.stringify(dataEvent), { color: { dark: '#000000', light: '#0000' } });
             const QR = await QRCode.toDataURL(JSON.stringify(dataEvent));
             res.send(`<img src="${QR}">`);
         } else {

@@ -7,6 +7,8 @@ import config from '../config';
 import { photoStudio } from '../api/photo_studio_event_management/models/photo_studio.model';
 import { listSocial as listSocialNetwork } from "../api/photo_studio_event_management/models/social_network.model";
 import { photoSocial } from '../api/user_management_guest_event_photographer/models/photo_social.model';
+import { guest } from '../api/photography_guest_management/models/guest_manage.model';
+import { compareFaceInPhotos } from '../services/aws/rekogition_face_aws';
 
 let keyLogger = new Array();
 
@@ -303,6 +305,86 @@ export class AuthController {
         } catch (error) {
             console.log("Error in postVerifyPasswd()", error);
             res.status(200).json({ message: "Error in process backend." });
+        }
+    }
+
+    static async signInGuest(req, res) {
+        const { email, password } = req.body;
+        userAccount = await guest.getDataLogin(email);
+        // if not user organizer event
+        console.log("guest", userAccount);
+        if (!userAccount) {
+            console.log("crashed");
+            res.status(200).json({ message: `User not found` });
+        } else {
+            // guest user exists
+            const matchPassword = await Encrypt.comparePassword(password, userAccount.password);
+            console.log("crash", matchPassword);
+            if (!matchPassword) {
+                console.log("crash 200");
+                res.status(200).json({ token: null, message: `invalid password` });
+            } else {
+                const token = jwt.sign({ id: userAccount.id }, config.SECRET, {
+                    expiresIn: 86400
+                });
+                console.log("crash good", token);
+                res.json({ token, message: `welcome`, type: 'Guest User' });
+            }
+        }
+    }
+
+    static async signUpGuest(req, res) {
+        const { name_user, email, phone, password, photo_1, photo_2, photo_3 } = req.body;
+        const resultNewAccount = await guest.getDataLogin(email);
+        console.log("User: ", resultNewAccount);
+        if (!resultNewAccount) {
+            res.json({
+                message: `User ${name_user} or email: ${email} does exists as guest user`
+            });
+        } else {
+            console.log("braek initial");
+            console.time("mytyme");
+            let resultComparisionPromise = compareFaceInPhotos(photo_1, photo_2);
+            console.log("braek?");
+            let resultComparision1Promise = compareFaceInPhotos(photo_2, photo_3);
+            console.log("braek end");
+            resultComparisionPromise.then(async (resolve1) => {
+                console.log("resolve", resolve1);
+                if (resolve1) {
+                    resultComparision1Promise.then(async (resolve2) => {
+                        if (resolve2) {
+                            // register new account guest
+                            const passwordCifrate = await Encrypt.encryptPassword(password);
+                            const codeUserGuest = await guest.createNewUserGuest(name_user, email, phone, passwordCifrate, photo_1, photo_2, photo_3);
+                            if (codeUserGuest > 0) {
+                                console.log("new code guest user", codeUserGuest);
+                                const token = jwt.sign({ id: codeUserGuest }, config.SECRET, {
+                                    expiresIn: 86400    // 24 hours
+                                });
+                                res.json({
+                                    message: `Account Guest user created succesfully`,
+                                    token
+                                });
+                            } else {
+                                res.status(200).json({ message: "Error in create account photographer", token: null });
+                            }
+                        } else {
+                            console.log("Error in promise resultComparision1Promise", error);
+                            res.status(200).json({ message: "no compare photo 2 with photo 3" });
+                        }
+                    }).catch(error => {
+                        console.log("Error in promise resultComparision1Promise", error);
+                        res.status(200).json({ message: "no compare photo 2 with photo 3" });
+                    });
+                } else {
+                    console.log("Error in promise resultComparisionPromise", error);
+                    res.status(200).json({ message: "no compare photo 1 with photo 2" });
+                }
+            }).catch(error => {
+                console.log("Error in promise ", error);
+                res.status(200).json({ message: "no compare photo 1 with photo 2" });
+            });
+            console.timeEnd("mytyme");
         }
     }
 }
