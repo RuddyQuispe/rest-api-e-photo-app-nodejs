@@ -310,7 +310,8 @@ export class AuthController {
 
     static async signInGuest(req, res) {
         const { email, password } = req.body;
-        userAccount = await guest.getDataLogin(email);
+        console.log(req.body);
+        const userAccount = await guest.getDataLogin(email);
         // if not user organizer event
         console.log("guest", userAccount);
         if (!userAccount) {
@@ -327,8 +328,8 @@ export class AuthController {
                 const token = jwt.sign({ id: userAccount.id }, config.SECRET, {
                     expiresIn: 86400
                 });
-                console.log("crash good", token);
-                res.json({ token, message: `welcome`, type: 'Guest User' });
+                console.log("crash good", token, userAccount.name);
+                res.json({ token, message: `welcome`, type: 'Guest User', name: userAccount.name });
             }
         }
     }
@@ -337,7 +338,7 @@ export class AuthController {
         const { name_user, email, phone, password, photo_1, photo_2, photo_3 } = req.body;
         const resultNewAccount = await guest.getDataLogin(email);
         console.log("User: ", resultNewAccount);
-        if (!resultNewAccount) {
+        if (resultNewAccount) {
             res.json({
                 message: `User ${name_user} or email: ${email} does exists as guest user`
             });
