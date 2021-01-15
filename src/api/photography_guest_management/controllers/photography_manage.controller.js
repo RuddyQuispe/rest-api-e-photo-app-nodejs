@@ -1,6 +1,9 @@
-import aws from 'aws-sdk';
-import { credentials } from './config';
-import fs from 'fs';
+// import aws from 'aws-sdk';
+// import { credentials } from './config';
+// import fs from 'fs';
+import { compareFaceInPhotos } from '../../../services/aws/rekogition_face_aws';
+import { guest } from '../models/guest_manage.model';
+import { photography } from '../models/photography_manage.model'
 
 export class PhotographyCOntroller {
 
@@ -30,8 +33,38 @@ export class PhotographyCOntroller {
         //         // fs.unlinkSync(req.file.path); // Empty temp folder
         //         const locationUrl = data.Location;
         //         console.log(locationUrl);
-                res.status(200).json({message: "Files saved successfully"});
+        res.status(200).json({ message: "Files saved successfully" });
         //     }
         // });
+    }
+
+    static async getListPhotographies(req, res) {
+        const { code_event, email_guest } = req.params;
+        console.log(code_event, email_guest);
+        const listPhotos = await photography.getListPhotographiesAndOwnerEvent(code_event);
+        const listGuestProfies = await guest.getListPhotos(email_guest);
+        let listPhotographiesRekognized = new Array();
+        console.log(listPhotos, listGuestProfies);
+        for (let index = 0; index < listPhotos.length; index++) {
+            console.log("aaaa", listGuestProfies.photo_1, listPhotos[index].photo_name);
+            let rekognitionPromise = compareFaceInPhotos(listGuestProfies.photo_1, listPhotos[index].photo_name);
+            rekognitionPromise.then(resolve => {
+                if (resolve) {
+                    listPhotographiesRekognized.push(listPhotos[index]);
+                    console.log(listPhotos[index]);
+                } else {
+                    console.log("not exists comparission ", listPhotos[index].id);
+                }
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+
+        setTimeout(() => {
+            console.log(listPhotographiesRekognized);
+            res.status(200).json({
+                list_photographies: listPhotographiesRekognized
+            })
+        }, (listPhotos.length+1)*1000);
     }
 }

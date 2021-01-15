@@ -362,30 +362,35 @@ export class AuthController {
                                 const token = jwt.sign({ id: codeUserGuest }, config.SECRET, {
                                     expiresIn: 86400    // 24 hours
                                 });
+                                console.timeEnd("mytyme");
                                 res.json({
                                     message: `Account Guest user created succesfully`,
                                     token
                                 });
                             } else {
+                                console.timeEnd("mytyme");
                                 res.status(200).json({ message: "Error in create account photographer", token: null });
                             }
                         } else {
-                            console.log("Error in promise resultComparision1Promise", error);
-                            res.status(200).json({ message: "no compare photo 2 with photo 3" });
+                            console.timeEnd("mytyme");
+                            console.log("no hay comparacion de rostros entre photo 2 y 3");
+                            res.status(200).json({ message: "no compare photo 2 with photo 3", token: null });
                         }
-                    }).catch(error => {
-                        console.log("Error in promise resultComparision1Promise", error);
-                        res.status(200).json({ message: "no compare photo 2 with photo 3" });
+                    }).catch(err => {
+                        console.timeEnd("mytyme");
+                        console.log("Error in promise resultComparision1Promise", err);
+                        res.status(200).json({ message: "no compare photo 2 with photo 3", token: null });
                     });
                 } else {
+                    console.timeEnd("mytyme");
                     console.log("Error in promise resultComparisionPromise", error);
-                    res.status(200).json({ message: "no compare photo 1 with photo 2" });
+                    res.status(200).json({ message: "no compare photo 1 with photo 2", token: null });
                 }
-            }).catch(error => {
-                console.log("Error in promise ", error);
-                res.status(200).json({ message: "no compare photo 1 with photo 2" });
+            }).catch(err => {
+                console.timeEnd("mytyme");
+                console.log("Error in promise ", err);
+                res.status(200).json({ message: "no compare photo 1 with photo 2", token: null });
             });
-            console.timeEnd("mytyme");
         }
     }
 }

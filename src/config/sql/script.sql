@@ -55,6 +55,7 @@ create table social_network(
 create table studio_social(
 	id_social integer not null,
 	id_studio integer not null,
+	description text not null,
 	primary key(id_social,id_studio),
 	foreign key (id_social) references social_network(id)
 	on update cascade
@@ -66,12 +67,13 @@ create table studio_social(
 
 create table photo_social(
 	id_social integer not null,
-	code_photigrapher integer not null,
-	primary key(id_social, code_photigrapher),
+	code_photographer integer not null,
+	description text not null,
+	primary key(id_social, code_photographer),
 	foreign key (id_social) references social_network(id)
 	on update cascade
 	on delete cascade,
-	foreign key (code_photigrapher) references photographer_user(code)
+	foreign key (code_photographer) references photographer_user(code)
 	on update cascade
 	on delete cascade
 );
@@ -97,6 +99,7 @@ create table guest_user(
 	name varchar(100) not null,
 	email varchar(30) not null,
 	phone varchar(8) not null,
+	password text not null,
 	photo_1 text not null,
 	photo_2 text not null,
 	photo_3 text not null
@@ -146,3 +149,24 @@ begin
 end $BODY$ language plpgsql;
 
 insert into social_network(description) values ('Facebook'),('Twiter'),('Instagram'),('Tik tok');
+
+insert into photo_studio("name",address) values ('kodak', '-17.803516,-63.167667');
+
+insert into photography("name",price,code_event,code_photographer) values 
+('photo3.jpg',10.0,1,1),
+('photo4.jpg',10.0,1,1),
+('photo5.jpg',15.0,1,1),
+('photo6.jpg',10.0,1,1),
+('photo7.jpg',10.0,1,2),
+('photo8.jpg',10.0,1,1),
+('photo9.jpg',10.0,1,2),
+('photo11.jpg',10.0,1,1),
+('photo12.jpg',10.0,1,2),
+('photo13.jpg',10.0,1,1);
+
+insert into photography("name",price,code_event,code_photographer) values 
+('fiest3.jpg',10.0,2,2),
+('fiest4.jpg',10.0,2,1),
+('fiesta1.jpg',15.0,2,2),
+('fiesta2.jpg',10.0,2,1),
+('fiesta5.jpg',10.0,2,2);

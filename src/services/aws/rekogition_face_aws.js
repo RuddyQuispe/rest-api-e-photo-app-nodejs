@@ -25,6 +25,7 @@ export function compareFaceInPhotos(photo1, photo2) {
         SimilarityThreshold: 70
     }
     // cantiner in Promise
+    console.log("compare photo: ", photo1, photo2);
     let promise = new Promise((resolve, reject) => {
         try {
             client.compareFaces(params, function (err, data) {
@@ -36,7 +37,7 @@ export function compareFaceInPhotos(photo1, photo2) {
                     console.log("data rekognition", data);
                     if (data.FaceMatches.length > 0) {
                         let flag = false;
-                        for (let index = 0; index < data.FaceMatches.length; index++) {
+                        for (let index = 0; index < data.FaceMatches.length && !flag; index++) {
                             if ((data.FaceMatches[index].Similarity) > 70) {
                                 console.log("response data", data.FaceMatches[index].Similarity);
                                 console.log("boolean value", data.FaceMatches[index].Similarity > 80);
@@ -45,7 +46,7 @@ export function compareFaceInPhotos(photo1, photo2) {
                             }
                         }
                         if (!flag) {
-                            resolve((data.FaceMatches[index].Similarity) > 70);
+                            resolve(false);
                         }
                     } else {
                         reject("Doesn't not exists comparision");

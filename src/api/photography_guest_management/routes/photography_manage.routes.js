@@ -3,10 +3,8 @@ import { PhotographyCOntroller } from '../controllers/photography_manage.control
 
 const router = Router();
 
-router.get(`/photo/:codeEvent`, (req, res) => {
-
-});
-
 router.post(`/upload_photos`, PhotographyCOntroller.uploadPhotos)
+
+router.get(`/list_photographies/:code_event/:email_guest`, PhotographyCOntroller.getListPhotographies)
 
 export default router;
