@@ -20,6 +20,21 @@ class Photography {
             return null;
         }
     }
+
+    /**
+     * return names photos
+     * @param {list[int]} listPhotography : list id photos
+     * @returns : list names photos
+     */
+    async getListPurchaseGuest(listPhotography){
+        try {
+            const response = await connectionDB.query(`select p.id, p."name", pu."name" as photographer from photography p, photographer_user pu where pu.code=p.code_photographer and p.id in (${listPhotography})`);
+            return response.rows;
+        } catch (error) {
+            console.log("Error in method getListPurchaseGuest(listPhotography)", error);
+            return null;
+        }
+    }
 }
 
 export const photography = new Photography();

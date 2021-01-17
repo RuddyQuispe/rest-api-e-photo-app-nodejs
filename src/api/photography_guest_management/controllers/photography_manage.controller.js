@@ -45,24 +45,24 @@ export class PhotographyCOntroller {
         const listGuestProfies = await guest.getListPhotos(email_guest);
         let listPhotographiesRekognized = new Array();
         console.log(listPhotos, listGuestProfies);
-        for (let index = 0; index < listPhotos.length; index++) {
-            console.log("aaaa", listGuestProfies.photo_1, listPhotos[index].photo_name);
-            let rekognitionPromise = compareFaceInPhotos(listGuestProfies.photo_1, listPhotos[index].photo_name);
-            rekognitionPromise.then(resolve => {
-                if (resolve) {
-                    listPhotographiesRekognized.push(listPhotos[index]);
-                    console.log(listPhotos[index]);
-                } else {
-                    console.log("not exists comparission ", listPhotos[index].id);
-                }
-            }).catch(err => {
-                console.log(err);
-            });
-        }
+        // for (let index = 0; index < listPhotos.length; index++) {
+        //     console.log("aaaa", listGuestProfies.photo_1, listPhotos[index].photo_name);
+        //     let rekognitionPromise = compareFaceInPhotos(listGuestProfies.photo_1, listPhotos[index].photo_name);
+        //     rekognitionPromise.then(resolve => {
+        //         if (resolve) {
+        //             listPhotographiesRekognized.push(listPhotos[index]);
+        //             console.log(listPhotos[index]);
+        //         } else {
+        //             console.log("not exists comparission ", listPhotos[index].id);
+        //         }
+        //     }).catch(err => {
+        //         console.log(err);
+        //     });
+        // }
         setTimeout(() => {
-            console.log(listPhotographiesRekognized);
+            // console.log(listPhotographiesRekognized);
             res.status(200).json({
-                list_photographies: listPhotographiesRekognized
+                list_photographies: listPhotos //listPhotographiesRekognized
             })
         }, (listPhotos.length+1)*1000);
     }
