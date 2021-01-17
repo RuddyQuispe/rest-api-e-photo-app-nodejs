@@ -59,7 +59,6 @@ export class PhotographyCOntroller {
                 console.log(err);
             });
         }
-
         setTimeout(() => {
             console.log(listPhotographiesRekognized);
             res.status(200).json({
