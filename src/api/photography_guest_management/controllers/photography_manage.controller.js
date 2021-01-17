@@ -1,6 +1,3 @@
-// import aws from 'aws-sdk';
-// import { credentials } from './config';
-// import fs from 'fs';
 import { compareFaceInPhotos } from '../../../services/aws/rekogition_face_aws';
 import { guest } from '../models/guest_manage.model';
 import { photography } from '../models/photography_manage.model'
