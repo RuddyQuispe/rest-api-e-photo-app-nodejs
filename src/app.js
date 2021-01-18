@@ -52,7 +52,7 @@ export class App {
                 },
                 key: function (req, file, cb) {
                     var re = /(?:\.([^.]+))?$/;
-                    cb(null, uuidv4()+'.'+re.exec(file.originalname)[1]);
+                    cb(null, uuidv4() + '.' + re.exec(file.originalname)[1]);
                 }
             })
         })
@@ -72,11 +72,15 @@ export class App {
         this.app.use('/api/user_organizer_manage', UserOrganizerEventRouter);
         this.app.use('/api/photo_studio', RouterPhotoStudio);
         this.app.use('/api/event_manage', RouterEvent);
-        this.app.use('/api/photography_manage', RouterPhotography);
-        this.app.post('/upload', this.upload.array('photos'), function (req, res) {
-            console.log("data:_");
+        this.app.use('/api/photography_manage', RouterPhotography.router);
+        this.app.post('/upload', this.upload.array('photos'), async function (req, res) {
             console.log("data:_", req.files);
-            res.send('Successfully uploaded ' + req.files.length + ' files!');
+            const { code_event, email_user, price } = req.body;
+            const response = await RouterPhotography.PhotographyCOntroller.uploadPhoto(req.files, price, code_event, email_user);
+            console.log("uploaded? ",response);
+            res.status(200).json({
+                message: `Successfully uploaded ${req.files.length} files!`
+            });
         });
         this.app.use('/api/sale_note_manage', RouterSaleNote);
         this.app.use(errorHandler);

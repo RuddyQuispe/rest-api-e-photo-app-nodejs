@@ -6,6 +6,24 @@ class Photography {
     }
 
     /**
+     * register photo in event
+     * @param {string} image : image name
+     * @param {double} price : price photo
+     * @param {integer} codeEvent : code event
+     * @param {int} codeUserPhotographer : code user
+     * @returns int
+     */
+    async uploadPhotoToEvent(image, price, codeEvent, codeUserPhotographer){
+        try {
+            const response = await connectionDB.query(`insert into photography("name",price,code_event,code_photographer) values ('${image}', cast(${price} as decimal(10,2), ${codeEvent}, ${codeUserPhotographer}) returning id`);
+            return response.rows[0].id;
+        } catch (error) {
+            console.log("Error in method uploadPhotoToEvent(image, price, codeEvent, codeUserPhotographer)", error);
+            return -1;
+        }
+    }
+
+    /**
      * get list photography contains
      * @param {integer} code : code event contains photographies
      * @returns
@@ -32,6 +50,21 @@ class Photography {
             return response.rows;
         } catch (error) {
             console.log("Error in method getListPurchaseGuest(listPhotography)", error);
+            return null;
+        }
+    }
+
+    /**
+     * get list photos picked in a event
+     * @param {int} codeEvent : code event
+     * @returns
+     */
+    async getListPhotographyOfEvent(codeEvent){
+        try {
+            const response = await connectionDB.query(`select "name" from photography p where code_event=${codeEvent}`);
+            return response.rows;
+        } catch (error) {
+            console.log("Error in method getListPhotographyOfEvent(codeEvent)", error);
             return null;
         }
     }

@@ -1,38 +1,40 @@
 import { compareFaceInPhotos } from '../../../services/aws/rekogition_face_aws';
+import { userPhotographer } from '../../user_management_guest_event_photographer/models/user_photographer.model';
 import { guest } from '../models/guest_manage.model';
 import { photography } from '../models/photography_manage.model'
 
 export class PhotographyCOntroller {
 
-    static async uploadPhotos(req, res) {
-        console.log(req);
+    /**
+     * upoad photo to server
+     * @param {array} imageList : list name photo
+     * @param {double} price : price photo
+     * @param {integer} codeEvent : code event to save
+     * @param {string } emailUserPhotographer : email account photographer
+     * @returns
+     */
+    static async uploadPhoto(imageList, price, codeEvent, emailUserPhotographer) {
+        const idUser = userPhotographer.getLoginUserData(emailUserPhotographer);
+        for (let index = 0; index < imageList.length; index++) {
+            const idPhoto = await photography.uploadPhotoToEvent(imageList[index].key, price, codeEvent, idUser.code)
+            if (idPhoto > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-        // aws.config.setPromisesDependency();
-        // aws.config.update({
-        //     accessKeyId: credentials.aws_access_key_id,
-        //     secretAccessKey: credentials.aws_secret_access_key,
-        //     region: credentials.AWS_REGION
-        // });
-        // const s3 = new aws.S3();
-        // console.log(req.file);
-        // var params = {
-        //     ACL: 'public-read',
-        //     Bucket: credentials.BUCKET_NAME,
-        //     Body: fs.createReadStream(req.file.path),
-        //     Key: `userAvatar/${req.file.originalname}`
-        // };
-
-        // s3.upload(params, (err, data) => {
-        //     if (err) {
-        //         console.log('Error occured while trying to upload to S3 bucket', err);
-        //     }
-        //     if (data) {
-        //         // fs.unlinkSync(req.file.path); // Empty temp folder
-        //         const locationUrl = data.Location;
-        //         console.log(locationUrl);
-        res.status(200).json({ message: "Files saved successfully" });
-        //     }
-        // });
+    /**
+     * get list photos
+     * @param {Request} req : HTTP 
+     * @param {Response} res : HTTP
+     */
+    static async getListPhotosEvent(req, res) {
+        const { code_event } = req.params;
+        const listPhotos = await photography.getListPhotographyOfEvent(code_event);
+        res.status(200).json({
+            list_photos : listPhotos
+        });
     }
 
     static async getListPhotographies(req, res) {
@@ -61,6 +63,6 @@ export class PhotographyCOntroller {
             res.status(200).json({
                 list_photographies: listPhotos //listPhotographiesRekognized
             })
-        }, (listPhotos.length+1)*1000);
+        }, (listPhotos.length + 1) * 1000);
     }
 }
