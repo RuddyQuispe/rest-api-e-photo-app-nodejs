@@ -5,23 +5,22 @@ import { photography } from '../models/photography_manage.model'
 
 export class PhotographyCOntroller {
 
-    /**
-     * upoad photo to server
-     * @param {array} imageList : list name photo
-     * @param {double} price : price photo
-     * @param {integer} codeEvent : code event to save
-     * @param {string } emailUserPhotographer : email account photographer
-     * @returns
-     */
-    static async uploadPhoto(imageList, price, codeEvent, emailUserPhotographer) {
-        const idUser = userPhotographer.getLoginUserData(emailUserPhotographer);
-        for (let index = 0; index < imageList.length; index++) {
-            const idPhoto = await photography.uploadPhotoToEvent(imageList[index].key, price, codeEvent, idUser.code)
-            if (idPhoto > 0) {
-                return false;
+    static async uploadPhotoEvent(req, res) {
+        const { image_name_list, price, code_event, email_user_photographer } = req.body;
+        const idUser = await userPhotographer.getLoginUserData(email_user_photographer);
+        console.log(idUser);
+        for (let index = 0; index < image_name_list.length; index++) {
+            const idPhoto = await photography.uploadPhotoToEvent(image_name_list[index], price, code_event, idUser.code);
+            if (idPhoto <= 0) {
+                res.status(200).json({
+                    message: `uploaded files i have a problems`
+                });
+                return;
             }
         }
-        return true;
+        res.status(200).json({
+            message: `uploaded ${image_name_list.length} files successfully`
+        });
     }
 
     /**
@@ -33,7 +32,7 @@ export class PhotographyCOntroller {
         const { code_event } = req.params;
         const listPhotos = await photography.getListPhotographyOfEvent(code_event);
         res.status(200).json({
-            list_photos : listPhotos
+            list_photos: listPhotos
         });
     }
 

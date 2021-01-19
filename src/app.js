@@ -72,14 +72,11 @@ export class App {
         this.app.use('/api/user_organizer_manage', UserOrganizerEventRouter);
         this.app.use('/api/photo_studio', RouterPhotoStudio);
         this.app.use('/api/event_manage', RouterEvent);
-        this.app.use('/api/photography_manage', RouterPhotography.router);
+        this.app.use('/api/photography_manage', RouterPhotography);
         this.app.post('/upload', this.upload.array('photos'), async function (req, res) {
             console.log("data:_", req.files);
-            const { code_event, email_user, price } = req.body;
-            const response = await RouterPhotography.PhotographyCOntroller.uploadPhoto(req.files, price, code_event, email_user);
-            console.log("uploaded? ",response);
             res.status(200).json({
-                message: `Successfully uploaded ${req.files.length} files!`
+                list_photos_name: req.files[0].key
             });
         });
         this.app.use('/api/sale_note_manage', RouterSaleNote);

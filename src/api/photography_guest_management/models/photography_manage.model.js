@@ -15,7 +15,7 @@ class Photography {
      */
     async uploadPhotoToEvent(image, price, codeEvent, codeUserPhotographer){
         try {
-            const response = await connectionDB.query(`insert into photography("name",price,code_event,code_photographer) values ('${image}', cast(${price} as decimal(10,2), ${codeEvent}, ${codeUserPhotographer}) returning id`);
+            const response = await connectionDB.query(`insert into photography("name",price,code_event,code_photographer) values ('${image}', cast(${price} as decimal(10,2)), ${codeEvent}, ${codeUserPhotographer}) returning id`);
             return response.rows[0].id;
         } catch (error) {
             console.log("Error in method uploadPhotoToEvent(image, price, codeEvent, codeUserPhotographer)", error);

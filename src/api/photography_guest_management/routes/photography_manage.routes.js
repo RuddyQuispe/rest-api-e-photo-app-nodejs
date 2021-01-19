@@ -7,4 +7,6 @@ router.get(`/list_photographies/:code_event/:email_guest`, PhotographyCOntroller
 
 router.get(`/list_photographies/:code_event`, PhotographyCOntroller.getListPhotosEvent);
 
-export default { router, PhotographyCOntroller };
+router.post(`/upload_photography`, PhotographyCOntroller.uploadPhotoEvent);
+
+export default router;
