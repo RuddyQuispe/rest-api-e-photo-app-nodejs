@@ -168,20 +168,16 @@ export class AuthController {
                     let contentHTML = `
                     <div style="width:75%; margin:0px auto;">
                         <div style="display:table-cell; vertical-align:middle; text-align: center;">
-                            <div style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; border-radius: 5px; background: #373B44;  /* fallback for old browsers */
-                        background: -webkit-linear-gradient(to left, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
-                        background: linear-gradient(to left, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-                        ">
-                                <img src="http://ec2-54-232-175-236.sa-east-1.compute.amazonaws.com/img/logo_oficial.png"
-                                    alt="Logo Technical Support" style="border-radius: 5px 5px 0 0;">
+                            <div style="background: #2980B9;  /* fallback for old browsers */
+                            background: -webkit-linear-gradient(to right, #FFFFFF, #6DD5FA, #2980B9);  /* Chrome 10-25, Safari 5.1-6 */
+                            background: linear-gradient(to right, #FFFFFF, #6DD5FA, #2980B9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                            ">
                                 <div style="padding: 2px 16px;" style="color: whitesmoke;">
-                                    <h2 style="color: whitesmoke;">Usuario E-photo-App</h2>
-                                    <h3 style="color: whitesmoke;">Estimado usuario<br>
-                                        Este es una llave de seguridad: <b style="color: yellow;">${key}</b>
-                                        <a style="color: greenyellow;" href="http://localhost:3000/confirm_key">Porfavor sigue este
-                                            enlace para recuperar tu cuenta</a>
-                                        gracias. <br>
-                                        No respondas a este email, es un boot.
+                                    <h2 style="color: black;">User E-photo-App</h2>
+                                    <h3 style="color: black;">Estimado usuario<br>
+                                        Este es una llave de seguridad: <b style="color: red;">${key}</b>
+                                        <a href="http://localhost:3000/confirm_key">Porfavor sigue este
+                                            enlace para recuperar tu cuenta</a>. gracias. <br>
                                     </h3>
                                 </div>
                             </div>
@@ -212,20 +208,16 @@ export class AuthController {
                     let contentHTML = `
                     <div style="width:75%; margin:0px auto;">
                         <div style="display:table-cell; vertical-align:middle; text-align: center;">
-                            <div style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; border-radius: 5px; background: #373B44;  /* fallback for old browsers */
-                        background: -webkit-linear-gradient(to left, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
-                        background: linear-gradient(to left, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-                        ">
-                                <img src="http://ec2-54-232-175-236.sa-east-1.compute.amazonaws.com/img/logo_oficial.png"
-                                    alt="Logo Technical Support" style="border-radius: 5px 5px 0 0;">
+                            <div style="background: #2980B9;  /* fallback for old browsers */
+                            background: -webkit-linear-gradient(to right, #FFFFFF, #6DD5FA, #2980B9);  /* Chrome 10-25, Safari 5.1-6 */
+                            background: linear-gradient(to right, #FFFFFF, #6DD5FA, #2980B9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                            ">
                                 <div style="padding: 2px 16px;" style="color: whitesmoke;">
-                                    <h2 style="color: whitesmoke;">Usuario E-photo-App</h2>
-                                    <h3 style="color: whitesmoke;">Estimado usuario<br>
-                                        Este es una llave de seguridad: <b style="color: yellow;">${key}</b>
-                                        <a style="color: greenyellow;" href="http://localhost:3000/confirm_key">Porfavor sigue este
-                                            enlace para recuperar tu cuenta</a>
-                                        gracias. <br>
-                                        No respondas a este email, es un boot.
+                                    <h2 style="color: black;">User E-photo-App</h2>
+                                    <h3 style="color: black;">Estimado usuario<br>
+                                        Este es una llave de seguridad: <b style="color: red;">${key}</b>
+                                        <a href="http://localhost:3000/confirm_key">Porfavor sigue este
+                                            enlace para recuperar tu cuenta</a>. gracias. <br>
                                     </h3>
                                 </div>
                             </div>

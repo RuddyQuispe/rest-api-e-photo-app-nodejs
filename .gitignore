@@ -3,3 +3,4 @@ node_modules
 src/config/config.js
 src/services/email/config.account.js
 .vscode/
+mailer.html
