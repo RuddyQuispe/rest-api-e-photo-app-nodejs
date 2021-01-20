@@ -321,7 +321,15 @@ export class AuthController {
                     expiresIn: 86400
                 });
                 console.log("crash good", token, userAccount.name);
-                res.json({ token, message: `welcome`, type: 'Guest User', name: userAccount.name });
+                res.json({ 
+                    token, 
+                    message: `welcome`, 
+                    type: 'Guest User', 
+                    name: userAccount.name, 
+                    photo_1: userAccount.photo_1, 
+                    photo_2: userAccount.photo_2, 
+                    photo_3: userAccount.photo_3 
+                });
             }
         }
     }

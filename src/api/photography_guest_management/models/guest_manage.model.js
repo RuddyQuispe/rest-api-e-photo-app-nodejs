@@ -7,7 +7,7 @@ class Guest {
 
     async getDataLogin(email) {
         try {
-            const response = await connectionDB.query(`select id, name, email, phone, password from guest_user where email='${email}'`);
+            const response = await connectionDB.query(`select id, name, email, phone, photo_1, photo_2, photo_3, password from guest_user where email='${email}'`);
             console.log(response.rows);
             return response.rows[0];
         } catch (error) {
